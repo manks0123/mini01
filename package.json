@@ -1,0 +1,30 @@
+{
+  "name": "mini01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manks0123/mini01.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manks0123/mini01/issues"
+  },
+  "homepage": "https://github.com/manks0123/mini01#readme",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "body-parser": "^1.20.3",
+    "chart.js": "^4.4.8",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+
+}
