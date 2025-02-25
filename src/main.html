@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu - Smart Farm Monitoring System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Style for Main Menu */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 50px;
+        }
+
+        .menu-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            margin: 20px;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .menu-card:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-card img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .menu-card h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .menu-card a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 16px;
+        }
+
+        .menu-card a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        Smart Farm Monitoring System - Main Menu
+    </header>
+
+    <!-- Main Menu -->
+    <div class="menu-container">
+        <!-- Sensor Dashboard -->
+        <div class="menu-card">
+            <img src="sensor_icon.png" alt="Sensor Dashboard">
+            <h2>Sensor Dashboard</h2>
+            <a href="sensor_dashboard.html">Go to Dashboard</a>
+        </div>
+
+        <!-- Plant Management -->
+        <div class="menu-card">
+            <img src="plant_icon.png" alt="Plant Management">
+            <h2>Plant Management</h2>
+            <a href="plant_management.html">Manage Plants</a>
+        </div>
+
+        <!-- Weather Information -->
+        <div class="menu-card">
+            <img src="weather_icon.png" alt="Weather Information">
+            <h2>Weather Information</h2>
+            <a href="weather_info.html">Check Weather</a>
+        </div>
+
+        <!-- Farm Map -->
+        <div class="menu-card">
+            <img src="map_icon.png" alt="Farm Map">
+            <h2>Farm Map</h2>
+            <a href="farm_map.html">View Map</a>
+        </div>
+
+        <!-- Logout -->
+        <div class="menu-card">
+            <img src="logout_icon.png" alt="Logout">
+            <h2>Logout</h2>
+            <a href="login.html">Log Out</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Smart Farm Monitoring System
+    </footer>
+
+</body>
+</html>
