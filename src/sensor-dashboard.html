@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Data Dashboard</title>
+    <link rel="stylesheet" href="css/page1.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Comprehensive Sensor Data Dashboard</h1>
+
+        <!-- Real-time sensor data section -->
+        <div class="sensor-data">
+            <div class="sensor-item">
+                <h3>Temperature</h3>
+                <p id="temperature-value">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h3>Humidity</h3>
+                <p id="humidity-value">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h3>Soil Moisture</h3>
+                <p id="soil-moisture-value">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Chart for sensor data visualization -->
+        <canvas id="sensorChart" width="400" height="200"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/script1.js"></script>
+</body>
+</html>
