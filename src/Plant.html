@@ -41,6 +41,30 @@
 <body>
   <h1>Plant Management</h1>
 
+  <h2>รายการพืชที่มีอยู่</h2>
+  <table>
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>ชื่อพืช</th>
+              <th>ฤดูกาล</th>
+              <th>ระยะเติบโต</th>
+              <th>พื้นที่เพาะปลูก</th>
+          </tr>
+      </thead>
+      <tbody id="plantsTable">
+          <!-- รายการพืชจะถูกเพิ่มที่นี่ -->
+      </tbody>
+  </table>
+  
+  <!-- ข้อมูลการแบ่งหน้า -->
+  <div id="paginationInfo"></div>
+  
+  <!-- ปุ่มการแบ่งหน้า -->
+  <div id="paginationControls"></div>
+  
+  
+
   <h2>Add a New Plant</h2>
   <form id="add-plant-form">
     <label for="Plant_ID">Plant ID:</label>
@@ -79,29 +103,7 @@
     <button type="submit">Delete Plant</button>
   </form>
 
-  <h2>รายการพืชที่มีอยู่</h2>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>ชื่อพืช</th>
-            <th>ฤดูกาล</th>
-            <th>ระยะเติบโต</th>
-            <th>พื้นที่เพาะปลูก</th>
-        </tr>
-    </thead>
-    <tbody id="plantsTable">
-        <!-- รายการพืชจะถูกเพิ่มที่นี่ -->
-    </tbody>
-</table>
-
-<!-- ข้อมูลการแบ่งหน้า -->
-<div id="paginationInfo"></div>
-
-<!-- ปุ่มการแบ่งหน้า -->
-<div id="paginationControls"></div>
-
-
+ 
   
 
   <script>
