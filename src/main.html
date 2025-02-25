@@ -1,129 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Menu - Smart Farm Monitoring System</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ระบบจัดการฟาร์ม</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* Style for Main Menu */
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary-color: #2c8a4f;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --text-light: #f5f5f5;
+            --text-dark: #333333;
+            --bg-light: #f5f7fa;
+            --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         header {
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-custom {
+            padding: 0;
+        }
+
+        .logo {
             color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        .menu-container {
+            font-size: 1.5rem;
+            font-weight: bold;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 50px;
+            align-items: center;
         }
 
-        .menu-card {
-            background-color: white;
-            border-radius: 10px;
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .login-button {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 250px;
-            margin: 20px;
+        }
+
+        main {
+            padding: 6rem 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
             text-align: center;
-            padding: 20px;
-            transition: transform 0.3s;
+            padding: 3rem 0;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        .menu-card:hover {
-            transform: scale(1.05);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .menu-card img {
-            width: 80px;
-            margin-bottom: 20px;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
         }
 
-        .menu-card h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 2rem;
         }
 
-        .menu-card a {
-            text-decoration: none;
-            color: #4CAF50;
-            font-size: 16px;
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .menu-card a:hover {
-            text-decoration: underline;
+        .feature-card {
+            background-color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
         }
 
         footer {
-            background-color: #333;
+            background-color: var(--primary-color);
             color: white;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Header -->
     <header>
-        Smart Farm Monitoring System - Main Menu
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <!-- Logo -->
+                <div class="col-9 d-flex align-items-center">
+                    <a class="navbar-brand logo" href="#">
+                        <span class="logo-icon">🌱</span>
+                        <span>Smart Farm</span>
+                    </a>
+                </div>
+    
+                <!-- เมนูและปุ่มเข้าสู่ระบบ -->
+                <div class="col-3 d-flex justify-content-end align-items-center">
+                    <div class="dropdown me-3">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ☰
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="Plant.html">Plant Management</a></li>
+                            <li><a class="dropdown-item" href="sensor-dashboard.html">Sensor Data</a></li>
+                            <li><a class="dropdown-item" href="weather.html">Weather Info</a></li>
+                        </ul>
+                    </div>
+                    <button class="login-button">เข้าสู่ระบบ</button>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <!-- Main Menu -->
-    <div class="menu-container">
-        <!-- Sensor Dashboard -->
-        <div class="menu-card">
-            <img src="sensor_icon.png" alt="Sensor Dashboard">
-            <h2>Sensor Dashboard</h2>
-            <a href="sensor_dashboard.html">Go to Dashboard</a>
-        </div>
+    <main>
+        <section class="hero">
+            <h1>ยินดีต้อนรับสู่ระบบจัดการฟาร์มอัจฉริยะ</h1>
+            <p>เทคโนโลยีที่ช่วยให้คุณจัดการฟาร์มได้อย่างมีประสิทธิภาพ ติดตามข้อมูลพืช ตรวจสอบเซ็นเซอร์ และรับข้อมูลสภาพอากาศแบบเรียลไทม์</p>
+        </section>
 
-        <!-- Plant Management -->
-        <div class="menu-card">
-            <img src="plant_icon.png" alt="Plant Management">
-            <h2>Plant Management</h2>
-            <a href="plant_management.html">Manage Plants</a>
-        </div>
+        <section class="features">
+            <div class="feature-card" onclick="location.href='Plant.html'">
+                <div class="feature-icon">🌿</div>
+                <h3>Plant Management</h3>
+                <p>จัดการข้อมูลพืช ติดตามการเจริญเติบโต และวางแผนการเพาะปลูกอย่างมีประสิทธิภาพ</p>
+            </div>
 
-        <!-- Weather Information -->
-        <div class="menu-card">
-            <img src="weather_icon.png" alt="Weather Information">
-            <h2>Weather Information</h2>
-            <a href="weather_info.html">Check Weather</a>
-        </div>
+            <div class="feature-card" onclick="location.href='sensor-dashboard.html'">
+                <div class="feature-icon">📊</div>
+                <h3>Sensor Data Dashboard</h3>
+                <p>ติดตามข้อมูลจากเซ็นเซอร์ทั้งหมดในฟาร์ม เช่น ความชื้นดิน อุณหภูมิ และค่าแสง</p>
+            </div>
 
-        <!-- Farm Map -->
-        <div class="menu-card">
-            <img src="map_icon.png" alt="Farm Map">
-            <h2>Farm Map</h2>
-            <a href="farm_map.html">View Map</a>
-        </div>
+            <div class="feature-card" onclick="location.href='weather.html'">
+                <div class="feature-icon">☁️</div>
+                <h3>Farm Weather Information</h3>
+                <p>ข้อมูลสภาพอากาศแบบเรียลไทม์ พร้อมการพยากรณ์ล่วงหน้าสำหรับการวางแผนกิจกรรมในฟาร์ม</p>
+            </div>
+        </section>
+    </main>
 
-        <!-- Logout -->
-        <div class="menu-card">
-            <img src="logout_icon.png" alt="Logout">
-            <h2>Logout</h2>
-            <a href="login.html">Log Out</a>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer>
-        &copy; 2025 Smart Farm Monitoring System
+        <p>© 2025 ระบบจัดการฟาร์มอัจฉริยะ - สร้างโดยเทคโนโลยีที่ทันสมัยเพื่อเกษตรกรไทย</p>
     </footer>
 
+    <script>
+        // เพิ่มเอฟเฟกต์ในการโหลดหน้า
+        document.addEventListener('DOMContentLoaded', function() {
+            const featureCards = document.querySelectorAll('.feature-card');
+            
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + (index * 150));
+            });
+        });
+
+        // เพิ่มฟังก์ชันสำหรับปุ่มล็อกอิน
+        document.querySelector('.login-button').addEventListener('click', function() {
+            alert('กำลังนำทางไปยังหน้าเข้าสู่ระบบ');
+            // ในสถานการณ์จริง จะใช้: window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>
