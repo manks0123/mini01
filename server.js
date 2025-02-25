@@ -40,23 +40,28 @@ app.get("/api/sensors", (req, res) => {
 });
 
 
+app.post("/api/plants/add", (req, res) => {
+  const { plant_name, plant_season, growth_stage, area_id } = req.body;
 
-// POST: เพิ่มพืช
-app.post("/api/plants", (req, res) => {
-  const { plant_id, plant_name, plant_season, growth_stage, area_id } = req.body;
+  if (!plant_name || !plant_season || !growth_stage || !area_id) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
 
-  // คำสั่ง SQL สำหรับการเพิ่มพืช (รวม plant_id ที่ระบุไว้)
+  console.log("Received data:", req.body);
+
+  // คำสั่ง SQL สำหรับการเพิ่มพืช (ไม่รวม Plant_ID เพราะเป็น AUTO_INCREMENT)
   const query = `
-    INSERT INTO Plant (plant_id, plant_name, plant_season, growth_stage, plantation_area_id)
-    VALUES (?, ?, ?, ?, ?)`;
+    INSERT INTO Plant (Plant_Name, Plant_season, Growth_stage, Area_ID)
+    VALUES (?, ?, ?, ?)`;
 
-  db.query(query, [plant_id, plant_name, plant_season, growth_stage, area_id], (err, result) => {
+  db.query(query, [plant_name, plant_season, growth_stage, area_id], (err, result) => {
     if (err) {
-      console.error("Error adding plant", err);
-      res.status(500).send("Error adding plant");
-    } else {
-      res.status(200).send("Plant added successfully");
+      console.error("Error adding plant:", err);
+      return res.status(500).json({ error: "Error adding plant" });
     }
+
+    console.log("Plant added successfully:", result);
+    res.status(201).json({ message: "Plant added successfully", plantId: result.insertId });
   });
 });
 
@@ -80,39 +85,69 @@ app.delete("/api/plants/:id", (req, res) => {
   });
 });
 
-// อัปเดตข้อมูลพืช
 app.put("/api/plants/:id", (req, res) => {
   const { id } = req.params;
-  const { plant, plant_season, growth_stage, plantation_area_id } = req.body;
+  const { plant_name, plant_season, growth_stage, area_id } = req.body; // แก้ชื่อให้ตรงกับฐานข้อมูล
+
+  if (!plant_name || !plant_season || !growth_stage || !area_id) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
 
   const query = `
     UPDATE Plant
-    SET plant = ?, plant_season = ?, growth_stage = ?, plantation_area_id = ?
-    WHERE plant_id = ?`;
+    SET Plant_Name = ?, Plant_season = ?, Growth_stage = ?, Area_ID = ?
+    WHERE Plant_ID = ?`;
 
-  db.query(query, [plant, plant_season, growth_stage, plantation_area_id, id], (err, result) => {
+  db.query(query, [plant_name, plant_season, growth_stage, area_id, id], (err, result) => {
     if (err) {
-      console.error("Error updating plant", err);
-      res.status(500).send(err);
-    } else if (result.affectedRows === 0) {
-      res.status(404).send({ message: "Plant not found" });
-    } else {
-      res.send({ message: "Plant updated successfully" });
+      console.error("Error updating plant:", err);
+      return res.status(500).json({ error: "Error updating plant", details: err });
+    } 
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Plant not found" });
     }
+
+    res.json({ message: "Plant updated successfully" });
   });
 });
 
-// ดึงข้อมูลพืชที่เพิ่มล่าสุด
 app.get("/api/plants", (req, res) => {
-  db.query("SELECT * FROM Plant ORDER BY Plant_ID DESC LIMIT 1", (err, result) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  const query = "SELECT * FROM Plant LIMIT ? OFFSET ?";
+  const countQuery = "SELECT COUNT(*) AS total FROM Plant";
+
+  db.query(countQuery, (err, countResults) => {
     if (err) {
-      console.error("Error fetching plant data", err);
-      res.status(500).send(err);
-    } else {
-      res.json(result);
+      console.error("Error fetching total count", err);
+      return res.status(500).send("Error fetching total count");
     }
+
+    const totalRecords = countResults[0].total;
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    db.query(query, [limit, offset], (err, results) => {
+      if (err) {
+        console.error("Error fetching plants", err);
+        return res.status(500).send("Error fetching plants");
+      } else {
+        res.json({
+          plants: results,
+          pagination: {
+            totalRecords,
+            totalPages,
+            currentPage: page,
+            limit,
+          },
+        });
+      }
+    });
   });
 });
+
 
 // เริ่มเซิร์ฟเวอร์
 app.listen(port, () => {

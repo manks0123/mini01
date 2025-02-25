@@ -5,38 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Management</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .pagination {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    button {
+        padding: 8px 12px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
 </head>
+</head>
+
+
 <body>
   <h1>Plant Management</h1>
 
-  <h1>Add New Plant</h1>
+  <h2>Add a New Plant</h2>
   <form id="add-plant-form">
-      <label for="plant_id">Plant ID:</label>
-      <input type="number" id="plant_id" name="plant_id" required>
+    <label for="Plant_ID">Plant ID:</label>
+    <input type="text" id="Plant_ID" required><br>
 
-      <label for="plant_name">Plant Name:</label>
-      <input type="text" id="plant_name" name="plant_name" required>
+    <label for="Plant_Name">Plant Name:</label>
+    <input type="text" id="Plant_Name" required><br>
 
-      <label for="plant_season">Plant Season:</label>
-      <input type="text" id="plant_season" name="plant_season" required>
+    <label for="Plant_season">Plant Season:</label>
+    <input type="text" id="Plant_season" required><br>
 
-      <label for="growth_stage">Growth Stage:</label>
-      <input type="text" id="growth_stage" name="growth_stage" required>
+    <label for="Growth_stage">Growth Stage:</label>
+    <input type="text" id="Growth_stage" required><br>
 
-      <label for="area_id">Area ID:</label>
-      <input type="number" id="area_id" name="area_id" required>
+    <label for="Area_ID">Area ID:</label>
+    <input type="text" id="Area_ID" required><br>
 
-      <button type="submit">Add Plant</button>
+    <button type="submit">Add Plant</button>
+
   </form>
-  
-  <div id="plantDisplay">
-    <h3>ข้อมูลพืชที่เพิ่มล่าสุด</h3>
-    <p><strong>ชื่อพืช:</strong> <span id="plantNameDisplay"></span></p>
-    <p><strong>ฤดูกาลปลูก:</strong> <span id="plantSeasonDisplay"></span></p>
-    <p><strong>ระยะการเจริญเติบโต:</strong> <span id="growthStageDisplay"></span></p>
-    <p><strong>พื้นที่ปลูก ID:</strong> <span id="areaIdDisplay"></span></p>
-  </div>
-  </form>
+
 
   <h2>Update Plant</h2>
   <form id="updatePlantForm">
@@ -44,7 +69,7 @@
     <input type="text" id="updatePlantName" placeholder="Plant Name" required><br>
     <input type="text" id="updatePlantSeason" placeholder="Plant Season" required><br>
     <input type="text" id="updateGrowthStage" placeholder="Growth Stage" required><br>
-    <input type="number" id="updatePlantationAreaId" placeholder="Plantation Area ID" required><br>
+    <input type="number" id="updateAreaId" placeholder="Plantation Area ID" required><br>
     <button type="submit">Update Plant</button>
   </form>
 
@@ -54,61 +79,89 @@
     <button type="submit">Delete Plant</button>
   </form>
 
+  <h2>รายการพืชที่มีอยู่</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ชื่อพืช</th>
+            <th>ฤดูกาล</th>
+            <th>ระยะเติบโต</th>
+            <th>พื้นที่เพาะปลูก</th>
+        </tr>
+    </thead>
+    <tbody id="plantsTable">
+        <!-- รายการพืชจะถูกเพิ่มที่นี่ -->
+    </tbody>
+</table>
+
+<!-- ข้อมูลการแบ่งหน้า -->
+<div id="paginationInfo"></div>
+
+<!-- ปุ่มการแบ่งหน้า -->
+<div id="paginationControls"></div>
+
+
+  
+
   <script>
-    // ฟังก์ชันสำหรับการเพิ่มพืช
-    document.getElementById("add-plant-form").addEventListener("submit", function(event) {
-            event.preventDefault();
+  document.getElementById("add-plant-form").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-            const plantData = {
-                plant_id: document.getElementById("plant_id").value,
-                plant_name: document.getElementById("plant_name").value,
-                plant_season: document.getElementById("plant_season").value,
-                growth_stage: document.getElementById("growth_stage").value,
-                area_id: document.getElementById("area_id").value
-            };
+      const plantData = {
+        plant_id: document.getElementById("Plant_ID").value,
+        plant_name: document.getElementById("Plant_Name").value,
+        plant_season: document.getElementById("Plant_season").value,
+        growth_stage: document.getElementById("Growth_stage").value,
+        area_id: document.getElementById("Area_ID").value
+      };
 
-            fetch("/api/plants", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(plantData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert("Plant added successfully!");
-                document.getElementById("add-plant-form").reset();
-            })
-            .catch(error => {
-                console.error("Error adding plant:", error);
-                alert("There was an error adding the plant.");
-            });
-        });
-
+      fetch("http://localhost:3001/api/plants/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(plantData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert("Plant added successfully!");
+        document.getElementById("add-plant-form").reset();
+      })
+      .catch(error => {
+        console.error("Error adding plant:", error);
+        alert("There was an error adding the plant.");
+      });
+    });
 
     // ฟังก์ชันสำหรับการอัปเดตพืช
-    document.getElementById("updatePlantForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const plantId = document.getElementById("updatePlantId").value;
-      const plantName = document.getElementById("updatePlantName").value;
-      const plantSeason = document.getElementById("updatePlantSeason").value;
-      const growthStage = document.getElementById("updateGrowthStage").value;
-      const plantationAreaId = document.getElementById("updatePlantationAreaId").value;
+document.getElementById("updatePlantForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  
+  const plantId = document.getElementById("updatePlantId").value;
+  const plantName = document.getElementById("updatePlantName").value;
+  const plantSeason = document.getElementById("updatePlantSeason").value;
+  const growthStage = document.getElementById("updateGrowthStage").value;
+  const areaId = document.getElementById("updateAreaId").value; // แก้ plantationAreaId -> areaId
 
-      axios.put(`http://localhost:3001/api/plants/${plantId}`, {
-        plant: plantName,
-        plant_season: plantSeason,
-        growth_stage: growthStage,
-        plantation_area_id: plantationAreaId,
-      })
-        .then(response => {
-          alert("Plant updated successfully!");
-          document.getElementById("updatePlantForm").reset();
-        })
-        .catch(error => {
-          console.error("There was an error updating the plant!", error);
-        });
+  console.log(plantId, plantName, plantSeason, growthStage, areaId);
+
+  axios.put(`http://localhost:3001/api/plants/${plantId}`, {
+    plant_name: plantName, // แก้จาก "plant" เป็น "plant_name"
+    plant_season: plantSeason,
+    growth_stage: growthStage,
+    area_id: areaId // แก้จาก "plantation_area_id" เป็น "area_id"
+  })
+    .then(response => {
+      alert("✅ อัปเดตข้อมูลพืชเรียบร้อยแล้ว!");
+      document.getElementById("updatePlantForm").reset();
+      fetchPlants(); // รีโหลดข้อมูลในตาราง
+    })
+    .catch(error => {
+      console.error("❌ มีข้อผิดพลาดในการอัปเดตพืช!", error);
+      alert("❌ ไม่สามารถอัปเดตพืชได้! โปรดตรวจสอบข้อมูลอีกครั้ง");
     });
+});
 
     // ฟังก์ชันสำหรับการลบพืช
     document.getElementById("deletePlantForm").addEventListener("submit", function (e) {
@@ -125,22 +178,88 @@
         });
     });
 
-     // ฟังก์ชันดึงข้อมูลพืชที่เพิ่มล่าสุด
-  function fetchLatestPlant() {
-    axios.get("http://localhost:3001/api/plants")
-      .then(response => {
-        const plant = response.data[0]; // ดึงข้อมูลแถวแรกจากผลลัพธ์ (ล่าสุด)
-        document.getElementById("plantNameDisplay").innerText = plant.plant_name;
-        document.getElementById("plantSeasonDisplay").innerText = plant.plant_season;
-        document.getElementById("growthStageDisplay").innerText = plant.growth_stage;
-        document.getElementById("areaIdDisplay").innerText = plant.area_id;
-      })
-      .catch(error => {
-        console.error("There was an error fetching the latest plant data", error);
-      });
-  }
 
-  
+let currentPage = 1; // หน้าปัจจุบัน
+let currentButtonSet = 1; // เซ็ตของปุ่ม (เริ่มต้นที่ 1)
+const itemsPerPage = 10; // จำนวนรายการต่อหน้า
+const buttonsPerSet = 10; // จำนวนปุ่มที่แสดงทีละชุด
+
+function fetchPlants(page = 1) {
+    currentPage = page; // อัปเดตหน้าปัจจุบัน
+
+    fetch(`http://localhost:3001/api/plants?page=${page}&limit=${itemsPerPage}`)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById("plantsTable");
+            tableBody.innerHTML = ""; // เคลียร์ข้อมูลเก่า
+
+            // เพิ่มรายการพืชลงในตาราง
+            data.plants.forEach(plant => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${plant.Plant_ID}</td>
+                    <td>${plant.Plant_Name}</td>
+                    <td>${plant.Plant_season}</td>
+                    <td>${plant.Growth_stage}</td>
+                    <td>${plant.Area_ID}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // แสดงข้อมูลการแบ่งหน้า
+            const paginationInfo = document.getElementById("paginationInfo");
+            paginationInfo.innerHTML = `Page ${data.pagination.currentPage} of ${data.pagination.totalPages}`;
+
+            // อัปเดตปุ่มแบ่งหน้า
+            updatePaginationButtons(data.pagination.totalPages);
+        })
+        .catch(error => console.error("Error fetching plants:", error));
+}
+
+// อัปเดตปุ่มแบ่งหน้าทีละ 10 ปุ่ม
+function updatePaginationButtons(totalPages) {
+    const paginationControls = document.getElementById("paginationControls");
+    paginationControls.innerHTML = ""; // เคลียร์ปุ่มเก่า
+
+    const startPage = (currentButtonSet - 1) * buttonsPerSet + 1;
+    const endPage = Math.min(startPage + buttonsPerSet - 1, totalPages);
+
+    // ปุ่ม "ก่อนหน้า" (ไปชุดก่อนหน้า)
+    if (startPage > 1) {
+        const prevSetButton = document.createElement("button");
+        prevSetButton.textContent = "« ก่อนหน้า";
+        prevSetButton.onclick = () => {
+            currentButtonSet--;
+            updatePaginationButtons(totalPages);
+        };
+        paginationControls.appendChild(prevSetButton);
+    }
+
+    // ปุ่มหมายเลขหน้า (ทีละ 10)
+    for (let i = startPage; i <= endPage; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        if (i === currentPage) button.style.fontWeight = "bold"; // เน้นปุ่มหน้าปัจจุบัน
+        button.onclick = () => fetchPlants(i);
+        paginationControls.appendChild(button);
+    }
+
+    // ปุ่ม "ถัดไป" (ไปชุดถัดไป)
+    if (endPage < totalPages) {
+        const nextSetButton = document.createElement("button");
+        nextSetButton.textContent = "ถัดไป »";
+        nextSetButton.onclick = () => {
+            currentButtonSet++;
+            updatePaginationButtons(totalPages);
+        };
+        paginationControls.appendChild(nextSetButton);
+    }
+}
+
+// โหลดข้อมูลเมื่อเปิดหน้าเว็บ
+document.addEventListener("DOMContentLoaded", () => fetchPlants(currentPage));
+
+
   </script>
 </body>
 </html>
