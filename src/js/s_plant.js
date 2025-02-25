@@ -3,7 +3,7 @@ document.getElementById("add-plant-form").addEventListener("submit", function(ev
     event.preventDefault();
 
     const plantData = {
-      plant_id: document.getElementById("Plant_ID").value,
+    
       plant_name: document.getElementById("Plant_Name").value,
       plant_season: document.getElementById("Plant_season").value,
       growth_stage: document.getElementById("Growth_stage").value,
@@ -48,13 +48,13 @@ axios.put(`http://localhost:3001/api/plants/${plantId}`, {
   area_id: areaId
 })
   .then(response => {
-    alert("✅ อัปเดตข้อมูลพืชเรียบร้อยแล้ว!");
+    alert("✅ Plant information updated successfully!");
     document.getElementById("updatePlantForm").reset();
     fetchPlants(currentPage); // รีโหลดข้อมูลในตาราง
   })
   .catch(error => {
-    console.error("❌ มีข้อผิดพลาดในการอัปเดตพืช!", error);
-    alert("❌ ไม่สามารถอัปเดตพืชได้! โปรดตรวจสอบข้อมูลอีกครั้ง");
+    console.error("❌ There was an error updating plants!", error);
+    alert("❌ Unable to update plants! Please check the information again.");
   });
 });
 
@@ -68,10 +68,10 @@ axios.put(`http://localhost:3001/api/plants/${plantId}`, {
 
   // ฟังก์ชันที่ใช้สำหรับลบพืช (ทั้งจากฟอร์มและปุ่มในตาราง)
   function deletePlant(plantId) {
-    if (confirm(`คุณต้องการลบพืชรหัส ${plantId} หรือไม่?`)) {
+    if (confirm(`You want to delete the code plant. ${plantId} Or not?`)) {
       axios.delete(`http://localhost:3001/api/plants/${plantId}`)
         .then(response => {
-          alert("✅ ลบพืชเรียบร้อยแล้ว!");
+          alert("✅ Successfully removed the plant!");
           fetchPlants(currentPage); // รีโหลดข้อมูลในตาราง
           document.getElementById("deletePlantForm").reset();
         })
