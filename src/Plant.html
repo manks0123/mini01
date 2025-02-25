@@ -5,182 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Management</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    :root {
-        --primary-color: #4caf50;
-        --secondary-color: #8bc34a;
-        --background-color: #f9f9f9;
-        --border-color: #ddd;
-        --text-color: #333;
-        --hover-color: #45a049;
-    }
-    
-    body {
-        font-family: 'Kanit', 'Sarabun', sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: var(--background-color);
-        color: var(--text-color);
-    }
-    
-    h1, h2 {
-        color: var(--primary-color);
-        border-bottom: 2px solid var(--primary-color);
-        padding-bottom: 10px;
-    }
-    
-    h1 {
-        text-align: center;
-        font-size: 2.5em;
-        margin-bottom: 30px;
-    }
-    
-    h2 {
-        margin-top: 30px;
-        font-size: 1.8em;
-    }
-    
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        background-color: white;
-    }
-    
-    th, td {
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid var(--border-color);
-    }
-    
-    th {
-        background-color: var(--primary-color);
-        color: white;
-        position: sticky;
-        top: 0;
-    }
-    
-    tr:hover {
-        background-color: rgba(76, 175, 80, 0.1);
-    }
-    
-    form {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
-    
-    label {
-        display: inline-block;
-        width: 150px;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-    
-    input[type="text"],
-    input[type="number"] {
-        width: calc(100% - 170px);
-        padding: 12px;
-        margin-bottom: 15px;
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        font-size: 16px;
-    }
-    
-    button {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
-    
-    button:hover {
-        background-color: var(--hover-color);
-    }
-    
-    #paginationControls {
-        display: flex;
-        justify-content: center;
-        margin: 20px 0;
-    }
-    
-    #paginationControls button {
-        margin: 0 5px;
-        padding: 8px 15px;
-    }
-    
-    #paginationInfo {
-        text-align: center;
-        margin: 10px 0;
-        font-weight: bold;
-    }
-    
-    .success-message {
-        background-color: rgba(76, 175, 80, 0.2);
-        border-left: 5px solid var(--primary-color);
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 4px;
-    }
-    
-    .error-message {
-        background-color: rgba(244, 67, 54, 0.2);
-        border-left: 5px solid #f44336;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 4px;
-    }
-    
-    .farm-theme {
-        background-image: url('/api/placeholder/1600/200');
-        background-size: cover;
-        background-position: center;
-        height: 200px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-        position: relative;
-    }
-    
-    .farm-theme::after {
-        content: 'ฟาร์มของเรา';
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px 20px;
-        border-radius: 4px;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: var(--primary-color);
-    }
-    
-    @media (max-width: 768px) {
-        label {
-            width: 100%;
-        }
-        
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-        }
-        
-        table {
-            display: block;
-            overflow-x: auto;
-        }
-    }
-</style>
+  <link rel="stylesheet" href="css/plant2.css">
+  <!-- เพิ่ม Font Awesome สำหรับไอคอนถังขยะ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
 </head>
-</head>
-
 
 <body>
   <div class="farm-theme"></div>
@@ -252,13 +81,13 @@
         <button type="submit">ปรับปรุงข้อมูล | Update Plant</button>
     </form>
     
-    <h2>ลบพืช | Delete Plant</h2>
+    <!-- <h2>ลบพืช | Delete Plant</h2>
     <form id="deletePlantForm">
         <label for="deletePlantId">รหัสพืช | Plant ID:</label>
         <input type="number" id="deletePlantId" required><br>
         
         <button type="submit">ลบพืช | Delete Plant</button>
-    </form>
+    </form> -->
 
   <script>
   document.getElementById("add-plant-form").addEventListener("submit", function(event) {
@@ -283,6 +112,7 @@
       .then(data => {
         alert("Plant added successfully!");
         document.getElementById("add-plant-form").reset();
+        fetchPlants(currentPage); // รีโหลดตาราง
       })
       .catch(error => {
         console.error("Error adding plant:", error);
@@ -298,20 +128,20 @@ document.getElementById("updatePlantForm").addEventListener("submit", function (
   const plantName = document.getElementById("updatePlantName").value;
   const plantSeason = document.getElementById("updatePlantSeason").value;
   const growthStage = document.getElementById("updateGrowthStage").value;
-  const areaId = document.getElementById("updateAreaId").value; // แก้ plantationAreaId -> areaId
+  const areaId = document.getElementById("updateAreaId").value;
 
   console.log(plantId, plantName, plantSeason, growthStage, areaId);
 
   axios.put(`http://localhost:3001/api/plants/${plantId}`, {
-    plant_name: plantName, // แก้จาก "plant" เป็น "plant_name"
+    plant_name: plantName,
     plant_season: plantSeason,
     growth_stage: growthStage,
-    area_id: areaId // แก้จาก "plantation_area_id" เป็น "area_id"
+    area_id: areaId
   })
     .then(response => {
       alert("✅ อัปเดตข้อมูลพืชเรียบร้อยแล้ว!");
       document.getElementById("updatePlantForm").reset();
-      fetchPlants(); // รีโหลดข้อมูลในตาราง
+      fetchPlants(currentPage); // รีโหลดข้อมูลในตาราง
     })
     .catch(error => {
       console.error("❌ มีข้อผิดพลาดในการอัปเดตพืช!", error);
@@ -320,36 +150,43 @@ document.getElementById("updatePlantForm").addEventListener("submit", function (
 });
 
     // ฟังก์ชันสำหรับการลบพืช
-    document.getElementById("deletePlantForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const plantId = document.getElementById("deletePlantId").value;
+    // document.getElementById("deletePlantForm").addEventListener("submit", function (e) {
+    //   e.preventDefault();
+    //   const plantId = document.getElementById("deletePlantId").value;
 
-      axios.delete(`http://localhost:3001/api/plants/${plantId}`)
-        .then(response => {
-          alert("Plant deleted successfully!");
-          document.getElementById("deletePlantForm").reset();
-        })
-        .catch(error => {
-          console.error("There was an error deleting the plant!", error);
-        });
-    });
+    //   deletePlant(plantId);
+    // });
 
+    // ฟังก์ชันที่ใช้สำหรับลบพืช (ทั้งจากฟอร์มและปุ่มในตาราง)
+    function deletePlant(plantId) {
+      if (confirm(`คุณต้องการลบพืชรหัส ${plantId} หรือไม่?`)) {
+        axios.delete(`http://localhost:3001/api/plants/${plantId}`)
+          .then(response => {
+            alert("✅ ลบพืชเรียบร้อยแล้ว!");
+            fetchPlants(currentPage); // รีโหลดข้อมูลในตาราง
+            document.getElementById("deletePlantForm").reset();
+          })
+          // .catch(error => {
+          //   console.error("❌ มีข้อผิดพลาดในการลบพืช!", error);
+          //   alert("❌ ไม่สามารถลบพืชได้!");
+          // });
+      }
+    }
 
-let currentPage = 1; // หน้าปัจจุบัน
-let currentButtonSet = 1; // เซ็ตของปุ่ม (เริ่มต้นที่ 1)
-const itemsPerPage = 10; // จำนวนรายการต่อหน้า
-const buttonsPerSet = 10; // จำนวนปุ่มที่แสดงทีละชุด
+let currentPage = 1;
+let currentButtonSet = 1;
+const itemsPerPage = 10;
+const buttonsPerSet = 10;
 
 function fetchPlants(page = 1) {
-    currentPage = page; // อัปเดตหน้าปัจจุบัน
+    currentPage = page;
 
     fetch(`http://localhost:3001/api/plants?page=${page}&limit=${itemsPerPage}`)
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById("plantsTable");
-            tableBody.innerHTML = ""; // เคลียร์ข้อมูลเก่า
+            tableBody.innerHTML = "";
 
-            // เพิ่มรายการพืชลงในตาราง
             data.plants.forEach(plant => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
@@ -358,32 +195,46 @@ function fetchPlants(page = 1) {
                     <td>${plant.Plant_season}</td>
                     <td>${plant.Growth_stage}</td>
                     <td>${plant.Area_ID}</td>
+                    <td>
+                        <button class="delete-button" onclick="deletePlant(${plant.Plant_ID})">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </td>
                 `;
                 tableBody.appendChild(row);
             });
 
-            // แสดงข้อมูลการแบ่งหน้า
             const paginationInfo = document.getElementById("paginationInfo");
             paginationInfo.innerHTML = `Page ${data.pagination.currentPage} of ${data.pagination.totalPages}`;
 
-            // อัปเดตปุ่มแบ่งหน้า
             updatePaginationButtons(data.pagination.totalPages);
         })
         .catch(error => console.error("Error fetching plants:", error));
 }
 
-// อัปเดตปุ่มแบ่งหน้าทีละ 10 ปุ่ม
 function updatePaginationButtons(totalPages) {
     const paginationControls = document.getElementById("paginationControls");
-    paginationControls.innerHTML = ""; // เคลียร์ปุ่มเก่า
+    paginationControls.innerHTML = "";
 
     const startPage = (currentButtonSet - 1) * buttonsPerSet + 1;
     const endPage = Math.min(startPage + buttonsPerSet - 1, totalPages);
 
-    // ปุ่ม "ก่อนหน้า" (ไปชุดก่อนหน้า)
+    // ปุ่มไปหน้าแรก
+    if (startPage > 1) {
+        const firstPageButton = document.createElement("button");
+        firstPageButton.textContent = "« หน้าแรก";
+        firstPageButton.onclick = () => {
+            currentButtonSet = 1;
+            fetchPlants(1);
+            updatePaginationButtons(totalPages);
+        };
+        paginationControls.appendChild(firstPageButton);
+    }
+
+    // ปุ่มย้อนกลับชุดก่อนหน้า
     if (startPage > 1) {
         const prevSetButton = document.createElement("button");
-        prevSetButton.textContent = "« ก่อนหน้า";
+        prevSetButton.textContent = "‹ ก่อนหน้า";
         prevSetButton.onclick = () => {
             currentButtonSet--;
             updatePaginationButtons(totalPages);
@@ -391,31 +242,41 @@ function updatePaginationButtons(totalPages) {
         paginationControls.appendChild(prevSetButton);
     }
 
-    // ปุ่มหมายเลขหน้า (ทีละ 10)
+    // ปุ่มหมายเลขหน้า
     for (let i = startPage; i <= endPage; i++) {
         const button = document.createElement("button");
         button.textContent = i;
-        if (i === currentPage) button.style.fontWeight = "bold"; // เน้นปุ่มหน้าปัจจุบัน
+        if (i === currentPage) button.style.fontWeight = "bold";
         button.onclick = () => fetchPlants(i);
         paginationControls.appendChild(button);
     }
 
-    // ปุ่ม "ถัดไป" (ไปชุดถัดไป)
+    // ปุ่มไปชุดหน้าถัดไป
     if (endPage < totalPages) {
         const nextSetButton = document.createElement("button");
-        nextSetButton.textContent = "ถัดไป »";
+        nextSetButton.textContent = "ถัดไป ›";
         nextSetButton.onclick = () => {
             currentButtonSet++;
             updatePaginationButtons(totalPages);
         };
         paginationControls.appendChild(nextSetButton);
     }
+
+    // ปุ่มไปหน้าสุดท้าย
+    if (endPage < totalPages) {
+        const lastPageButton = document.createElement("button");
+        lastPageButton.textContent = "หน้าสุดท้าย »";
+        lastPageButton.onclick = () => {
+            currentButtonSet = Math.ceil(totalPages / buttonsPerSet);
+            fetchPlants(totalPages);
+            updatePaginationButtons(totalPages);
+        };
+        paginationControls.appendChild(lastPageButton);
+    }
 }
 
-// โหลดข้อมูลเมื่อเปิดหน้าเว็บ
+
 document.addEventListener("DOMContentLoaded", () => fetchPlants(currentPage));
-
-
   </script>
 </body>
 </html>

@@ -1,0 +1,185 @@
+
+    :root {
+        --primary-color: #4caf50;
+        --secondary-color: #8bc34a;
+        --background-color: #f9f9f9;
+        --border-color: #ddd;
+        --text-color: #333;
+        --hover-color: #45a049;
+    }
+    
+    body {
+        font-family: 'Kanit', 'Sarabun', sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+    
+    h1, h2 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+    }
+    
+    h1 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+    }
+    
+    h2 {
+        margin-top: 30px;
+        font-size: 1.8em;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+    
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    th {
+        background-color: var(--primary-color);
+        color: white;
+        position: sticky;
+        top: 0;
+    }
+    
+    tr:hover {
+        background-color: rgba(76, 175, 80, 0.1);
+    }
+    
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+    
+    label {
+        display: inline-block;
+        width: 150px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="number"] {
+        width: calc(100% - 170px);
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
+    button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+    
+    button:hover {
+        background-color: var(--hover-color);
+    }
+    
+    #paginationControls {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    
+    #paginationControls button {
+        margin: 0 5px;
+        padding: 8px 15px;
+    }
+    
+    #paginationInfo {
+        text-align: center;
+        margin: 10px 0;
+        font-weight: bold;
+    }
+    
+    .success-message {
+        background-color: rgba(76, 175, 80, 0.2);
+        border-left: 5px solid var(--primary-color);
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+    
+    .error-message {
+        background-color: rgba(244, 67, 54, 0.2);
+        border-left: 5px solid #f44336;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+    
+    .farm-theme {
+        background-image: url('/api/placeholder/1600/200');
+        background-size: cover;
+        background-position: center;
+        height: 200px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    .farm-theme::after {
+        content: 'ฟาร์มของเรา';
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    
+    @media (max-width: 768px) {
+        label {
+            width: 100%;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+        }
+        
+        table {
+            display: block;
+            overflow-x: auto;
+        }
+    }
+
+    .delete-button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .delete-button:hover {
+      background-color: #e60000;
+    }
