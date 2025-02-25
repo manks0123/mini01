@@ -118,23 +118,54 @@ app.get("/api/plants", (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const offset = (page - 1) * limit;
+  const searchTerm = req.query.search || "";
+  const sortBy = req.query.sortBy || "Plant_ID";
+  const sortOrder = req.query.sortOrder || "ASC";
+  
+  // ตรวจสอบความถูกต้องของพารามิเตอร์
+  if (page < 1 || limit < 1 || limit > 100) {
+    return res.status(400).json({
+      error: "Invalid pagination parameters"
+    });
+  }
 
-  const query = "SELECT * FROM Plant LIMIT ? OFFSET ?";
-  const countQuery = "SELECT COUNT(*) AS total FROM Plant";
+  let query = "SELECT * FROM Plant";
+  let countQuery = "SELECT COUNT(*) AS total FROM Plant";
+  let queryParams = [];
+  
+  // เพิ่มการค้นหา
+  if (searchTerm) {
+    query += " WHERE Plant_Name LIKE ? OR Plant_season LIKE ?";
+    countQuery += " WHERE Plant_Name LIKE ? OR Plant_season LIKE ?";
+    queryParams.push(`%${searchTerm}%`, `%${searchTerm}%`);
+  }
+  
+  // เพิ่มการเรียงลำดับ
+  query += ` ORDER BY ${sortBy} ${sortOrder}`;
+  
+  // เพิ่ม LIMIT และ OFFSET
+  query += " LIMIT ? OFFSET ?";
+  queryParams.push(limit, offset);
 
-  db.query(countQuery, (err, countResults) => {
+  db.query(countQuery, queryParams.slice(0, 2), (err, countResults) => {
     if (err) {
       console.error("Error fetching total count", err);
-      return res.status(500).send("Error fetching total count");
+      return res.status(500).json({
+        error: "Database error when fetching count",
+        details: err.message
+      });
     }
 
     const totalRecords = countResults[0].total;
     const totalPages = Math.ceil(totalRecords / limit);
 
-    db.query(query, [limit, offset], (err, results) => {
+    db.query(query, queryParams, (err, results) => {
       if (err) {
         console.error("Error fetching plants", err);
-        return res.status(500).send("Error fetching plants");
+        return res.status(500).json({
+          error: "Database error when fetching plants",
+          details: err.message
+        });
       } else {
         res.json({
           plants: results,

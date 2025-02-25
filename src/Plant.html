@@ -5,33 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Management</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
   <style>
+    :root {
+        --primary-color: #4caf50;
+        --secondary-color: #8bc34a;
+        --background-color: #f9f9f9;
+        --border-color: #ddd;
+        --text-color: #333;
+        --hover-color: #45a049;
+    }
+    
+    body {
+        font-family: 'Kanit', 'Sarabun', sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+    
+    h1, h2 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+    }
+    
+    h1 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+    }
+    
+    h2 {
+        margin-top: 30px;
+        font-size: 1.8em;
+    }
+    
     table {
         width: 100%;
         border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: white;
     }
+    
     th, td {
-        border: 1px solid black;
-        padding: 8px;
+        padding: 15px;
         text-align: left;
+        border-bottom: 1px solid var(--border-color);
     }
+    
     th {
-        background-color: #f2f2f2;
+        background-color: var(--primary-color);
+        color: white;
+        position: sticky;
+        top: 0;
     }
-    .pagination {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
+    
+    tr:hover {
+        background-color: rgba(76, 175, 80, 0.1);
     }
+    
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+    
+    label {
+        display: inline-block;
+        width: 150px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="number"] {
+        width: calc(100% - 170px);
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
     button {
-        padding: 8px 12px;
-        margin: 5px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
         cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
     }
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+    
+    button:hover {
+        background-color: var(--hover-color);
+    }
+    
+    #paginationControls {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    
+    #paginationControls button {
+        margin: 0 5px;
+        padding: 8px 15px;
+    }
+    
+    #paginationInfo {
+        text-align: center;
+        margin: 10px 0;
+        font-weight: bold;
+    }
+    
+    .success-message {
+        background-color: rgba(76, 175, 80, 0.2);
+        border-left: 5px solid var(--primary-color);
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+    
+    .error-message {
+        background-color: rgba(244, 67, 54, 0.2);
+        border-left: 5px solid #f44336;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+    
+    .farm-theme {
+        background-image: url('/api/placeholder/1600/200');
+        background-size: cover;
+        background-position: center;
+        height: 200px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    .farm-theme::after {
+        content: 'ฟาร์มของเรา';
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    
+    @media (max-width: 768px) {
+        label {
+            width: 100%;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+        }
+        
+        table {
+            display: block;
+            overflow-x: auto;
+        }
     }
 </style>
 </head>
@@ -39,72 +183,82 @@
 
 
 <body>
-  <h1>Plant Management</h1>
-
-  <h2>รายการพืชที่มีอยู่</h2>
-  <table>
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>ชื่อพืช</th>
-              <th>ฤดูกาล</th>
-              <th>ระยะเติบโต</th>
-              <th>พื้นที่เพาะปลูก</th>
-          </tr>
-      </thead>
-      <tbody id="plantsTable">
-          <!-- รายการพืชจะถูกเพิ่มที่นี่ -->
-      </tbody>
-  </table>
-  
-  <!-- ข้อมูลการแบ่งหน้า -->
-  <div id="paginationInfo"></div>
-  
-  <!-- ปุ่มการแบ่งหน้า -->
-  <div id="paginationControls"></div>
-  
-  
-
-  <h2>Add a New Plant</h2>
-  <form id="add-plant-form">
-    <label for="Plant_ID">Plant ID:</label>
-    <input type="text" id="Plant_ID" required><br>
-
-    <label for="Plant_Name">Plant Name:</label>
-    <input type="text" id="Plant_Name" required><br>
-
-    <label for="Plant_season">Plant Season:</label>
-    <input type="text" id="Plant_season" required><br>
-
-    <label for="Growth_stage">Growth Stage:</label>
-    <input type="text" id="Growth_stage" required><br>
-
-    <label for="Area_ID">Area ID:</label>
-    <input type="text" id="Area_ID" required><br>
-
-    <button type="submit">Add Plant</button>
-
-  </form>
-
-
-  <h2>Update Plant</h2>
-  <form id="updatePlantForm">
-    <input type="number" id="updatePlantId" placeholder="Plant ID" required><br>
-    <input type="text" id="updatePlantName" placeholder="Plant Name" required><br>
-    <input type="text" id="updatePlantSeason" placeholder="Plant Season" required><br>
-    <input type="text" id="updateGrowthStage" placeholder="Growth Stage" required><br>
-    <input type="number" id="updateAreaId" placeholder="Plantation Area ID" required><br>
-    <button type="submit">Update Plant</button>
-  </form>
-
-  <h2>Delete Plant</h2>
-  <form id="deletePlantForm">
-    <input type="number" id="deletePlantId" placeholder="Plant ID" required><br>
-    <button type="submit">Delete Plant</button>
-  </form>
-
- 
-  
+  <div class="farm-theme"></div>
+    
+    <h1>ระบบจัดการพืช | Plant Management System</h1>
+    
+    <div id="messages"></div>
+    
+    <h2>รายการพืชที่มีอยู่ | Plant List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ชื่อพืช | Plant Name</th>
+                <th>ฤดูกาล | Season</th>
+                <th>ระยะเติบโต | Growth Stage</th>
+                <th>พื้นที่เพาะปลูก | Area ID</th>
+                <th>การจัดการ | Actions</th>
+            </tr>
+        </thead>
+        <tbody id="plantsTable">
+            <!-- Plants will be added here -->
+        </tbody>
+    </table>
+    
+    <!-- Pagination Info -->
+    <div id="paginationInfo"></div>
+    
+    <!-- Pagination Controls -->
+    <div id="paginationControls"></div>
+    
+    <h2>เพิ่มพืชใหม่ | Add a New Plant</h2>
+    <form id="add-plant-form">
+        <label for="Plant_ID">รหัสพืช | Plant ID:</label>
+        <input type="number" id="Plant_ID" required><br>
+        
+        <label for="Plant_Name">ชื่อพืช | Plant Name:</label>
+        <input type="text" id="Plant_Name" required><br>
+        
+        <label for="Plant_season">ฤดูกาล | Plant Season:</label>
+        <input type="text" id="Plant_season" required><br>
+        
+        <label for="Growth_stage">ระยะเติบโต | Growth Stage:</label>
+        <input type="text" id="Growth_stage" required><br>
+        
+        <label for="Area_ID">รหัสพื้นที่ | Area ID:</label>
+        <input type="number" id="Area_ID" required><br>
+        
+        <button type="submit">เพิ่มพืช | Add Plant</button>
+    </form>
+    
+    <h2>ปรับปรุงข้อมูลพืช | Update Plant</h2>
+    <form id="updatePlantForm">
+        <label for="updatePlantId">รหัสพืช | Plant ID:</label>
+        <input type="number" id="updatePlantId" required><br>
+        
+        <label for="updatePlantName">ชื่อพืช | Plant Name:</label>
+        <input type="text" id="updatePlantName" required><br>
+        
+        <label for="updatePlantSeason">ฤดูกาล | Plant Season:</label>
+        <input type="text" id="updatePlantSeason" required><br>
+        
+        <label for="updateGrowthStage">ระยะเติบโต | Growth Stage:</label>
+        <input type="text" id="updateGrowthStage" required><br>
+        
+        <label for="updateAreaId">รหัสพื้นที่ | Area ID:</label>
+        <input type="number" id="updateAreaId" required><br>
+        
+        <button type="submit">ปรับปรุงข้อมูล | Update Plant</button>
+    </form>
+    
+    <h2>ลบพืช | Delete Plant</h2>
+    <form id="deletePlantForm">
+        <label for="deletePlantId">รหัสพืช | Plant ID:</label>
+        <input type="number" id="deletePlantId" required><br>
+        
+        <button type="submit">ลบพืช | Delete Plant</button>
+    </form>
 
   <script>
   document.getElementById("add-plant-form").addEventListener("submit", function(event) {
