@@ -41,21 +41,21 @@ db.connect((err) => {
   }
   console.log("Connected to MySQL");
 });
-
-// ดึงข้อมูลเซ็นเซอร์ล่าสุด
-app.get("/api/sensors", (req, res) => {
-  db.query(
-    "SELECT * FROM Sensor_Data ORDER BY timestamp DESC LIMIT 10",
-    (err, result) => {
-      if (err) {
-        console.error("Error fetching sensor data", err);
-        res.status(500).send(err);
-      } else {
-        res.json(result);
-      }
-    }
-  );
-});
+// // ดึงข้อมูลเซ็นเซอร์ล่าสุด
+// app.get("/api/sensors", (req, res) => {
+//   db.query(
+//     "SELECT * FROM Sensor_Data ORDER BY timestamp DESC LIMIT 10",
+//     (err, result) => {
+//       if (err) {
+    
+//     console.error("Error fetching sensor data", err);
+//         res.status(500).send(err);
+//       } else {
+//         res.json(result);
+//       }
+//     }
+//   );
+// });
 
 
 app.post("/api/plants/add", (req, res) => {
@@ -191,67 +191,10 @@ app.get("/api/plants", (req, res) => {
   });
 });
 
-app.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
-
-  console.log("Received data:", req.body);
-
-  const query = "INSERT INTO Users (username, email, password) VALUES (?, ?, ?)";
-  db.query(query, [username, email, password], (err, result) => {
-      if (err) {
-          console.error("Error registering user:", err);
-          return res.status(500).send('An error occurred');
-      }
-
-      res.send('User registered successfully');
-  });
-});
-
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // คำสั่ง SQL เพื่อตรวจสอบข้อมูลผู้ใช้
-  const query = "SELECT * FROM Users WHERE username = ? AND password = ?";
-  db.query(query, [username, password], (err, result) => {
-    if (err) {
-      console.error("Error logging in:", err);
-      return res.status(500).send('An error occurred');
-    }
-
-    if (result.length > 0) {
-      req.session.user = result[0].username;
-      return res.send('Login successful');
-    } else {
-      return res.status(401).send('Invalid username or password');
-    }
-  });
-});
 
 
-app.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-      if (err) {
-          return res.status(500).send('Error logging out');
-      }
-      res.send('Logout successful');
-  });
-});
 
-app.get('/profile', (req, res) => {
 
-  console.log(req.session.user);
-  if (req.session.user) {
-    console.log(req.session.user);
-      return res.json({
-          message: 'User is logged in',
-          username: req.session.user,  
-      });
-  } else {
-      return res.status(401).json({
-          message: 'User not logged in'
-      });
-  }
-});
 
 
 app.listen(port, () => {
