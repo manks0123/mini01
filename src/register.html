@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="css/page3login.css">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="css/register4.css">
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <form id="loginForm">
+    <div class="register-container">
+        <h1>Register</h1>
+        <form id="registerForm">
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">Register</button>
             <p id="error-message"></p>
         </form>
     </div>
 
-    <script src="js/script3login.js"></script>
+    <script src="js/script4.js"></script>
 </body>
 </html>

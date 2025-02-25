@@ -2,10 +2,26 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 require("dotenv").config();
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: 'secret',    
+  resave: false,                  
+  saveUninitialized: true,      
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', 
+    httpOnly: true,               
+    maxAge: 24 * 60 * 60 * 1000 
+  }      
+}));
+
 
 const port = process.env.PORT || 3001;
 
@@ -51,7 +67,6 @@ app.post("/api/plants/add", (req, res) => {
 
   console.log("Received data:", req.body);
 
-  // คำสั่ง SQL สำหรับการเพิ่มพืช (ไม่รวม Plant_ID เพราะเป็น AUTO_INCREMENT)
   const query = `
     INSERT INTO Plant (Plant_Name, Plant_season, Growth_stage, Area_ID)
     VALUES (?, ?, ?, ?)`;
@@ -69,7 +84,6 @@ app.post("/api/plants/add", (req, res) => {
 
 
 
-// ลบข้อมูลพืช
 app.delete("/api/plants/:id", (req, res) => {
   const { id } = req.params;
 
@@ -89,7 +103,7 @@ app.delete("/api/plants/:id", (req, res) => {
 
 app.put("/api/plants/:id", (req, res) => {
   const { id } = req.params;
-  const { plant_name, plant_season, growth_stage, area_id } = req.body; // แก้ชื่อให้ตรงกับฐานข้อมูล
+  const { plant_name, plant_season, growth_stage, area_id } = req.body; 
 
   if (!plant_name || !plant_season || !growth_stage || !area_id) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -122,7 +136,6 @@ app.get("/api/plants", (req, res) => {
   const sortBy = req.query.sortBy || "Plant_ID";
   const sortOrder = req.query.sortOrder || "ASC";
   
-  // ตรวจสอบความถูกต้องของพารามิเตอร์
   if (page < 1 || limit < 1 || limit > 100) {
     return res.status(400).json({
       error: "Invalid pagination parameters"
@@ -133,17 +146,14 @@ app.get("/api/plants", (req, res) => {
   let countQuery = "SELECT COUNT(*) AS total FROM Plant";
   let queryParams = [];
   
-  // เพิ่มการค้นหา
   if (searchTerm) {
     query += " WHERE Plant_Name LIKE ? OR Plant_season LIKE ?";
     countQuery += " WHERE Plant_Name LIKE ? OR Plant_season LIKE ?";
     queryParams.push(`%${searchTerm}%`, `%${searchTerm}%`);
   }
   
-  // เพิ่มการเรียงลำดับ
   query += ` ORDER BY ${sortBy} ${sortOrder}`;
   
-  // เพิ่ม LIMIT และ OFFSET
   query += " LIMIT ? OFFSET ?";
   queryParams.push(limit, offset);
 
@@ -181,8 +191,69 @@ app.get("/api/plants", (req, res) => {
   });
 });
 
+app.post('/register', (req, res) => {
+  const { username, email, password } = req.body;
 
-// เริ่มเซิร์ฟเวอร์
+  console.log("Received data:", req.body);
+
+  const query = "INSERT INTO Users (username, email, password) VALUES (?, ?, ?)";
+  db.query(query, [username, email, password], (err, result) => {
+      if (err) {
+          console.error("Error registering user:", err);
+          return res.status(500).send('An error occurred');
+      }
+
+      res.send('User registered successfully');
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // คำสั่ง SQL เพื่อตรวจสอบข้อมูลผู้ใช้
+  const query = "SELECT * FROM Users WHERE username = ? AND password = ?";
+  db.query(query, [username, password], (err, result) => {
+    if (err) {
+      console.error("Error logging in:", err);
+      return res.status(500).send('An error occurred');
+    }
+
+    if (result.length > 0) {
+      req.session.user = result[0].username;
+      return res.send('Login successful');
+    } else {
+      return res.status(401).send('Invalid username or password');
+    }
+  });
+});
+
+
+app.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+      if (err) {
+          return res.status(500).send('Error logging out');
+      }
+      res.send('Logout successful');
+  });
+});
+
+app.get('/profile', (req, res) => {
+
+  console.log(req.session.user);
+  if (req.session.user) {
+    console.log(req.session.user);
+      return res.json({
+          message: 'User is logged in',
+          username: req.session.user,  
+      });
+  } else {
+      return res.status(401).json({
+          message: 'User not logged in'
+      });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
