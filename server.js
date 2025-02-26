@@ -57,7 +57,7 @@ db.connect((err) => {
 //   );
 // });
 
-
+// เพิ่มพืช
 app.post("/api/plants/add", (req, res) => {
   const { plant_name, plant_season, growth_stage, area_id } = req.body;
 
@@ -190,6 +190,8 @@ app.get("/api/plants", (req, res) => {
     });
   });
 });
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

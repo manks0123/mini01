@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plant Management</title>
+  <title>ระบบจัดการพืช | Plant Management System</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="css/plant2.css">
-  <!-- เพิ่ม Font Awesome สำหรับไอคอนถังขยะ -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,23 +25,25 @@
             <span class="logo-icon">🌱</span>
             <span>Smart Farm</span>
           </a>
+          <a href="#add-plant" class="btn custom-btn">เพิ่มพืช</a>
+          <a href="#update-plant" class="btn custom-btn">อัปเดตพืช</a>
         </div>
     
         <!-- เมนูและปุ่มเข้าสู่ระบบ -->
         <div class="col-3 d-flex justify-content-end align-items-center">
           <div class="dropdown me-3">
             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              ☰
+              <i class="fas fa-bars"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="Plant.html">Plant Management</a></li>
-              <li><a class="dropdown-item" href="sensor-dashboard.html">Sensor Data</a></li>
-              <li><a class="dropdown-item" href="weather.html">Weather Info</a></li>
+              <li><a class="dropdown-item" href="Plant.html"><i class="fas fa-seedling me-2"></i>Plant Management</a></li>
+              <li><a class="dropdown-item" href="sensor-dashboard.html"><i class="fas fa-microchip me-2"></i>Sensor Data</a></li>
+              <li><a class="dropdown-item" href="weather.html"><i class="fas fa-cloud-sun me-2"></i>Weather Info</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="main.html">หน้าหลัก</a></li>
+              <li><a class="dropdown-item" href="main.html"><i class="fas fa-home me-2"></i>หน้าหลัก</a></li>
             </ul>
           </div>
-          <button class="login-button">เข้าสู่ระบบ</button>
+          <!-- <button class="login-button"><i class="fas fa-user me-1"></i> เข้าสู่ระบบ</button> -->
         </div>
       </div>
     </nav>
@@ -51,73 +52,107 @@
   <main>
     <div class="farm-theme"></div>
     
-    <h1>ระบบจัดการพืช | Plant Management System</h1>
+    <h1><i class="fas fa-leaf me-2"></i>ระบบจัดการพืช | Plant Management System</h1>
     
     <div id="messages"></div>
     
+
+
     <h2>รายการพืชที่มีอยู่ | Plant List</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>ชื่อพืช | Plant Name</th>
-          <th>ฤดูกาล | Season</th>
-          <th>ระยะเติบโต | Growth Stage</th>
-          <th>พื้นที่เพาะปลูก | Area ID</th>
-          <th>การจัดการ | Actions</th>
-        </tr>
-      </thead>
-      <tbody id="plantsTable">
-        <!-- Plants will be added here -->
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ชื่อพืช | Plant Name</th>
+            <th>ฤดูกาล | Season</th>
+            <th>ระยะเติบโต | Growth Stage</th>
+            <th>พื้นที่เพาะปลูก | Area ID</th>
+            <th>การจัดการ | Actions</th>
+          </tr>
+        </thead>
+        <tbody id="plantsTable">
+          <!-- Plants will be added here -->
+        </tbody>
+      </table>
+    </div>
     
     <!-- Pagination Info -->
     <div id="paginationInfo"></div>
     
     <!-- Pagination Controls -->
     <div id="paginationControls"></div>
+ 
     
+ <section id="add-plant">    
     <h2>เพิ่มพืชใหม่ | Add a New Plant</h2>
     <form id="add-plant-form">
-    
-  
-      <label for="Plant_Name">ชื่อพืช | Plant Name:</label>
-      <input type="text" id="Plant_Name" required><br>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="Plant_Name">ชื่อพืช | Plant Name:</label>
+          <input type="text" id="Plant_Name" placeholder="กรุณาใส่ชื่อพืช" required>
+        </div>
+        <div class="col-md-6">
+          <label for="Plant_season">ฤดูกาล | Plant Season:</label>
+          <input type="text" id="Plant_season" placeholder="ฤดูร้อน, ฤดูฝน, ฤดูหนาว" required>
+        </div>
+      </div>
       
-      <label for="Plant_season">ฤดูกาล | Plant Season:</label>
-      <input type="text" id="Plant_season" required><br>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="Growth_stage">ระยะเติบโต | Growth Stage:</label>
+          <input type="text" id="Growth_stage" placeholder="เช่น ต้นกล้า, เติบโต, ออกดอก" required>
+        </div>
+        <div class="col-md-6">
+          <label for="Area_ID">รหัสพื้นที่ | Area ID:</label>
+          <input type="number" id="Area_ID" placeholder="กรุณาใส่รหัสพื้นที่" required>
+        </div>
+      </div>
       
-      <label for="Growth_stage">ระยะเติบโต | Growth Stage:</label>
-      <input type="text" id="Growth_stage" required><br>
-      
-      <label for="Area_ID">รหัสพื้นที่ | Area ID:</label>
-      <input type="number" id="Area_ID" required><br>
-      
-      <button type="submit">เพิ่มพืช | Add Plant</button>
+      <button type="submit"><i class="fas fa-plus-circle me-1"></i> เพิ่มพืช | Add Plant</button>
     </form>
-    
+</section>
+
+<section id="update-plant">
     <h2>ปรับปรุงข้อมูลพืช | Update Plant</h2>
     <form id="updatePlantForm">
-      <label for="updatePlantId">รหัสพืช | Plant ID:</label>
-      <input type="number" id="updatePlantId" required><br>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="updatePlantId">รหัสพืช | Plant ID:</label>
+          <input type="number" id="updatePlantId" placeholder="กรุณาใส่รหัสพืช" required>
+        </div>
+        <div class="col-md-6">
+          <label for="updatePlantName">ชื่อพืช | Plant Name:</label>
+          <input type="text" id="updatePlantName" placeholder="กรุณาใส่ชื่อพืช" required>
+        </div>
+      </div>
       
-      <label for="updatePlantName">ชื่อพืช | Plant Name:</label>
-      <input type="text" id="updatePlantName" required><br>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="updatePlantSeason">ฤดูกาล | Plant Season:</label>
+          <input type="text" id="updatePlantSeason" placeholder="ฤดูร้อน, ฤดูฝน, ฤดูหนาว" required>
+        </div>
+        <div class="col-md-4">
+          <label for="updateGrowthStage">ระยะเติบโต | Growth Stage:</label>
+          <input type="text" id="updateGrowthStage" placeholder="เช่น ต้นกล้า, เติบโต, ออกดอก" required>
+        </div>
+        <div class="col-md-4">
+          <label for="updateAreaId">รหัสพื้นที่ | Area ID:</label>
+          <input type="number" id="updateAreaId" placeholder="กรุณาใส่รหัสพื้นที่" required>
+        </div>
+      </div>
       
-      <label for="updatePlantSeason">ฤดูกาล | Plant Season:</label>
-      <input type="text" id="updatePlantSeason" required><br>
-      
-      <label for="updateGrowthStage">ระยะเติบโต | Growth Stage:</label>
-      <input type="text" id="updateGrowthStage" required><br>
-      
-      <label for="updateAreaId">รหัสพื้นที่ | Area ID:</label>
-      <input type="number" id="updateAreaId" required><br>
-      
-      <button type="submit">ปรับปรุงข้อมูล | Update Plant</button>
+      <button type="submit"><i class="fas fa-sync-alt me-1"></i> ปรับปรุงข้อมูล | Update Plant</button>
     </form>
+</section>
 
     <script src="js/s_plant.js"></script>
   </main>
+  
+  <footer class="bg-light mt-4 py-3 text-center">
+    <div class="container">
+      <p class="text-muted mb-0">© 2025 Smart Farm Management System | พัฒนาโดยทีมงาน Smart Farm</p>
+    </div>
+  </footer>
 </body>
 </html>
