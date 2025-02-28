@@ -1,16 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor Data Dashboard</title>
+    <title>Smart Farm - Sensor Data Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/page1.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 <body>
-    <div class="container">
-        <h1>Comprehensive Sensor Data Dashboard</h1>
+    <!-- Header with Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <!-- Back button and logo group -->
+                <div class="col-9 d-flex align-items-center">
+                    <a href="main.html" class="btn btn-light me-3">
+                        <i class="fas fa-arrow-left"></i> กลับ
+                    </a>
+                    <a class="navbar-brand logo" href="main.html">
+                        <span class="logo-icon">🌱</span>
+                        <span>Smart Farm</span>
+                    </a>
+                </div>
+                
+                <!-- Menu and login button -->
+                <div class="col-3 d-flex justify-content-end align-items-center">
+                    <div class="dropdown me-3">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="Plant.html"><i class="fas fa-seedling me-2"></i>Plant Management</a></li>
+                            <li><a class="dropdown-item" href="sensor-dashboard.html"><i class="fas fa-microchip me-2"></i>Sensor Data</a></li>
+                            <li><a class="dropdown-item" href="weather.html"><i class="fas fa-cloud-sun me-2"></i>Weather Info</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="main.html"><i class="fas fa-home me-2"></i>หน้าหลัก</a></li>
+                        </ul>
+                    </div>
+                    <!-- <button class="login-button"><i class="fas fa-user me-1"></i> เข้าสู่ระบบ</button> -->
+                </div>
+            </div>
+        </nav>
+    </header>
 
-        
+    <!-- Farm Theme Banner -->
+    <div class="farm-theme">
+        <div class="banner-content">
+            <h1>Comprehensive Sensor Data Dashboard</h1>
+        </div>
+    </div>
+
+    <div class="container">        
         <div class="sensor-data">
             <div class="sensor-item">
                 <h3>Temperature</h3>
@@ -25,12 +69,14 @@
                 <p id="soil-moisture-value">Loading...</p>
             </div>
         </div>
-
-       
-        <canvas id="sensorChart" width="400" height="200"></canvas>
+        
+        <div class="chart-container">
+            <canvas id="sensorChart"></canvas>
+            <p class="last-update" id="last-update">Last update: --:--:--</p>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="js/script1.js"></script>
 </body>
 </html>
