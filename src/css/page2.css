@@ -387,3 +387,100 @@ footer {
         font-size: 1.2rem;
     }
 }
+
+@media (max-width: 576px) {
+    :root {
+        --header-height: 50px;
+    }
+    
+    .navbar-brand span:not(.logo-icon) {
+        font-size: 0.9rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.4rem;
+        margin-right: 5px;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+    
+    .hero-content .lead {
+        font-size: 1rem;
+    }
+    
+    .farm-theme {
+        height: 180px;
+    }
+    
+    .container {
+        padding: 15px;
+        margin: 15px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+    
+    h1::before, h1::after {
+        font-size: 1.3rem;
+    }
+    
+    .farm-icon {
+        font-size: 1.8rem;
+    }
+    
+    .weather-info {
+        padding: 15px;
+    }
+    
+    .weather-info h3 {
+        font-size: 1.2rem;
+    }
+    
+    .weather-info p {
+        font-size: 1rem;
+        padding: 8px;
+    }
+    
+    .btn-light {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    footer {
+        font-size: 0.9rem;
+        margin-top: 20px;
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 1.4rem;
+    }
+    
+    .navbar-brand span:not(.logo-icon) {
+        font-size: 0.8rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.2rem;
+    }
+    
+    h1::before, h1::after {
+        content: "";
+    }
+    
+    .weather-info h3::before {
+        font-size: 1.4rem;
+    }
+    
+    #temperature::before,
+    #humidity::before,
+    #description::before {
+        font-size: 1.2rem;
+    }
+}
