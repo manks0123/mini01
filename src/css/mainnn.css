@@ -6,8 +6,8 @@
     --secondary-color: #ff9800;
     --text-light: #f8f9fa;
     --text-dark: #333333;
-    --bg-light: #f5f7fa;
-    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4f1eb 100%);
+    --bg-light: #CBDDD1;
+    --bg-gradient: linear-gradient(135deg, #CBDDD1 0%, #e4f1eb 100%);
     --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     --card-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.1);
     --header-height: 70px;
