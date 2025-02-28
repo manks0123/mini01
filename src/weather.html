@@ -4,153 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farm Weather Information</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f3e6;
-            background-image: url('/api/placeholder/800/600');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #3a3a3a;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            border: 2px solid #8b703e;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #5d4037;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            border-bottom: 2px solid #8b703e;
-            padding-bottom: 15px;
-            position: relative;
-        }
-        
-        h1::after {
-            content: "🌾";
-            position: absolute;
-            font-size: 2rem;
-            right: 0;
-        }
-        
-        h1::before {
-            content: "🌾";
-            position: absolute;
-            font-size: 2rem;
-            left: 0;
-        }
-        
-        .weather-info {
-            background-color: #fefefe;
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #8bc34a;
-        }
-        
-        .weather-info h3 {
-            color: #33691e;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-        
-        .weather-info h3::before {
-            content: "🌤️";
-            margin-right: 10px;
-            font-size: 1.8rem;
-        }
-        
-        .weather-info p {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #f8f8f8;
-            display: flex;
-            align-items: center;
-        }
-        
-        #temperature::before {
-            content: "🌡️";
-            margin-right: 10px;
-            font-size: 1.4rem;
-        }
-        
-        #humidity::before {
-            content: "💧";
-            margin-right: 10px;
-            font-size: 1.4rem;
-        }
-        
-        #description::before {
-            content: "☁️";
-            margin-right: 10px;
-            font-size: 1.4rem;
-        }
-        
-        .farm-decoration {
-            display: flex;
-            justify-content: space-around;
-            margin: 25px 0;
-        }
-        
-        .farm-icon {
-            font-size: 2.5rem;
-            color: #795548;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #6d4c41;
-            font-style: italic;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .weather-info h3 {
-                font-size: 1.3rem;
-            }
-            
-            .weather-info p {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/page2.css">
 </head>
 <body>
+    <!-- Header with Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <!-- Back button and logo group -->
+                <div class="col-9 d-flex align-items-center">
+                    <a href="main.html" class="btn btn-light me-3">
+                        <i class="fas fa-arrow-left"></i> กลับ
+                    </a>
+                    <a class="navbar-brand logo" href="main.html">
+                        <span class="logo-icon">🌱</span>
+                        <span>KEITTIPOOM FARM</span>
+                    </a>
+                </div>
+                
+                <!-- Menu and login button -->
+                <div class="col-3 d-flex justify-content-end align-items-center">
+                    <div class="dropdown me-3">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="Plant.html"><i class="fas fa-seedling me-2"></i>Plant Management</a></li>
+                            <li><a class="dropdown-item" href="sensor-dashboard.html"><i class="fas fa-microchip me-2"></i>Sensor Data</a></li>
+                            <li><a class="dropdown-item" href="weather.html"><i class="fas fa-cloud-sun me-2"></i>Weather Info</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="main.html"><i class="fas fa-home me-2"></i>หน้าหลัก</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Farm Theme Section -->
+    <div class="farm-theme">
+        <div class="hero-content">
+            <h1>Farm Weather Information</h1>
+            <p class="lead">Plan your farm activities with accurate weather data</p>
+        </div>
+    </div>
+    
     <div class="container">
-        <h1>Farm Weather Information</h1>
+        <h1>Today's Weather</h1>
         
         <!-- Farm Icons -->
         <div class="farm-decoration">
@@ -162,7 +64,7 @@
         
         <!-- Weather Information Section -->
         <div class="weather-info">
-            <h3>Current Weather in&ThinSpace; <span id="location">Loading...</span></h3>
+            <h3>Current Weather in <span id="location">Loading...</span></h3>
             <p id="temperature">Temperature: Loading...</p>
             <p id="humidity">Humidity: Loading...</p>
             <p id="description">Weather: Loading...</p>
@@ -173,6 +75,7 @@
         </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="js/script2.js"></script>
 </body>
-</html
+</html>
