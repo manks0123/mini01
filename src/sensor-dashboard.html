@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Farm - Sensor Data Dashboard</title>
+    <title>Smart Farm - Weather Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/page1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <link rel="stylesheet" href="css/page1.css">
+
 </head>
 <body>
     <!-- Header with Navigation -->
@@ -48,23 +49,24 @@
 
     <!-- Farm Theme Banner -->
     <div class="farm-theme">
-        <div class="banner-content">
-            <h1>Comprehensive Sensor Data Dashboard</h1>
+        <div class="hero-content">
+            <h1>Farm Weather Information</h1>
+            <p class="lead">Plan your farm activities with accurate and real-time weather data</p>
         </div>
     </div>
 
-    <div class="container">        
+    <div class="container">
         <div class="sensor-data">
             <div class="sensor-item">
-                <h3>Temperature</h3>
+                <h3><i class="fas fa-temperature-high me-2"></i>Temperature</h3>
                 <p id="temperature-value">Loading...</p>
             </div>
             <div class="sensor-item">
-                <h3>Humidity</h3>
+                <h3><i class="fas fa-tint me-2"></i>Humidity</h3>
                 <p id="humidity-value">Loading...</p>
             </div>
             <div class="sensor-item">
-                <h3>Soil Moisture</h3>
+                <h3><i class="fas fa-water me-2"></i>Soil Moisture</h3>
                 <p id="soil-moisture-value">Loading...</p>
             </div>
         </div>
@@ -74,7 +76,6 @@
             <p class="last-update" id="last-update">Last update: --:--:--</p>
         </div>
     </div>
-
 
     <script src="js/script1.js"></script>
 </body>
