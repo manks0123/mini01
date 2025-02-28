@@ -1,4 +1,3 @@
-
 :root {
     --header-height: 70px;
     --primary-green: #4CAF50;
@@ -34,9 +33,10 @@ header {
 .navbar-custom {
     padding: 10px 0;
 }
+
 .navbar-brand span:not(.logo-icon) {
     color: white;
-    }
+}
 
 .navbar-brand {
     font-weight: bold;
@@ -96,6 +96,11 @@ header {
 .hero-content h1 {
     font-size: 2.8rem;
     margin-bottom: 15px;
+    text-align: center;
+}
+
+.hero-content .lead {
+    font-size: 1.2rem;
     text-align: center;
 }
 
@@ -223,6 +228,13 @@ footer {
     border-top: 1px dashed var(--accent-brown);
 }
 
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 2.4rem;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         margin: 20px;
@@ -230,6 +242,10 @@ footer {
     }
     
     h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content h1 {
         font-size: 2rem;
     }
     
@@ -243,5 +259,35 @@ footer {
     
     .farm-theme {
         height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand span:not(.logo-icon) {
+        font-size: 0.9rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.5rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content .lead {
+        font-size: 1rem;
+    }
+    
+    .farm-theme {
+        height: 200px;
+    }
+    
+    h1::before, h1::after {
+        font-size: 1.5rem;
+    }
+    
+    .farm-icon {
+        font-size: 2rem;
     }
 }
