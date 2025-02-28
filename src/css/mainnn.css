@@ -46,11 +46,11 @@ body {
     background: var(--primary-color);
 }
 
-/* ===== HEADER & NAVBAR ===== */
+/* ===== HEADER & NAVBAR - ปรับปรุงเพื่อความ Responsive ===== */
 header {
     background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
-    padding: 0.5rem 2rem;
-    position: fixed; /* ยังคง fixed */
+    padding: 0.5rem 1rem; /* ลดแพดดิ้งลงเล็กน้อยเพื่อให้เหมาะกับหน้าจอเล็ก */
+    position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -58,6 +58,7 @@ header {
     height: var(--header-height);
     transition: all 0.3s ease;
 }
+
 header.scrolled {
     background: rgba(106, 220, 110, 0.95);
     backdrop-filter: blur(10px);
@@ -66,6 +67,7 @@ header.scrolled {
 
 .navbar-custom {
     padding: 0;
+    width: 100%;
 }
 
 .logo {
@@ -89,10 +91,115 @@ header.scrolled {
     animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+.navbar-toggler {
+    border: none;
+    color: white;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+.login-button {
+    background: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 0.6rem 1.5rem; /* ปรับขนาดปุ่มให้เหมาะสมกับหน้าจอเล็ก */
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* ป้องกันข้อความแตกเป็นหลายบรรทัด */
+}
+
+.login-button:hover {
+    background-color: var(--text-light);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-light {
+    background-color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+    background-color: var(--text-light);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 992px) {
+    :root {
+        --header-height: 60px;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.6rem;
+    }
+    
+    .login-button {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .login-button {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --header-height: 55px;
+    }
+    
+    header {
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .logo-icon {
+        margin-right: 5px;
+        font-size: 1.4rem;
+    }
+    
+    .logo span:last-child {
+        display: none; /* ซ่อนข้อความ "Smart Farm" บนหน้าจอเล็กมาก */
+    }
+    
+    .login-button {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-light {
+        padding: 0.35rem 0.6rem;
+    }
+    
+    .dropdown-menu {
+        min-width: 200px; /* กำหนดความกว้างขั้นต่ำของเมนู dropdown */
+    }
 }
 
 .dropdown-menu {
