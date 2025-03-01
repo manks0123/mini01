@@ -132,20 +132,6 @@ h1 {
     position: relative;
 }
 
-h1::after {
-    content: "🌾";
-    position: absolute;
-    font-size: 2rem;
-    right: 0;
-}
-
-h1::before {
-    content: "🌾";
-    position: absolute;
-    font-size: 2rem;
-    left: 0;
-}
-
 .weather-info {
     background-color: #fefefe;
     padding: 25px;
