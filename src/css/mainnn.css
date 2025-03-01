@@ -100,7 +100,9 @@ header.scrolled {
 .navbar-collapse {
     flex-grow: 0;
 }
-
+.navbar-brand span:not(.logo-icon) {
+    color: white;
+}
 .login-button {
     background: white;
     color: var(--primary-color);
@@ -497,75 +499,6 @@ main {
 
 .feature-link:hover::after {
     width: 100%;
-}
-
-/* ===== FOOTER ===== */
-footer {
-    background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
-    color: white;
-    text-align: center;
-    padding: 2rem;
-    margin-top: 4rem;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 992px) {
-    :root {
-        --header-height: 60px;
-    }
-    
-    .hero h1 {
-        font-size: 2.3rem;
-    }
-    
-    .hero p {
-        font-size: 1.1rem;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    main {
-        padding: 1.5rem;
-    }
-    
-    .hero {
-        padding: 3rem 1rem;
-    }
-    
-    .hero h1 {
-        font-size: 2rem;
-    }
-    
-    .feature-card {
-        padding: 2.5rem 1.5rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero h1 {
-        font-size: 1.8rem;
-    }
-    
-    .hero p {
-        font-size: 1rem;
-    }
-    
-    .section-title {
-        font-size: 1.7rem;
-    }
-    
-    .feature-icon-container {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .feature-icon {
-        font-size: 2.5rem;
-    }
 }
 
   

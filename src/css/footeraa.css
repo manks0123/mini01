@@ -1,0 +1,73 @@
+
+/* ===== FOOTER ===== */
+footer {
+    background: linear-gradient(to right, #457D58, #7D9B76); /* ไล่เฉด */
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    clear: both;
+
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+    :root {
+        --header-height: 60px;
+    }
+    
+    .hero h1 {
+        font-size: 2.3rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 1.5rem;
+    }
+    
+    .hero {
+        padding: 3rem 1rem;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .feature-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.7rem;
+    }
+    
+    .feature-icon-container {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+
+}

@@ -41,21 +41,7 @@ db.connect((err) => {
   }
   console.log("Connected to MySQL");
 });
-// // ดึงข้อมูลเซ็นเซอร์ล่าสุด
-// app.get("/api/sensors", (req, res) => {
-//   db.query(
-//     "SELECT * FROM Sensor_Data ORDER BY timestamp DESC LIMIT 10",
-//     (err, result) => {
-//       if (err) {
-    
-//     console.error("Error fetching sensor data", err);
-//         res.status(500).send(err);
-//       } else {
-//         res.json(result);
-//       }
-//     }
-//   );
-// });
+
 
 // เพิ่มพืช
 app.post("/api/plants/add", (req, res) => {
