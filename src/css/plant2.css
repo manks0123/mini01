@@ -27,7 +27,7 @@
   
   /* Navbar styles */
   .navbar-custom {
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(to right, #457D58, #7D9B76);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     padding: 0.6rem 0;
   }
@@ -498,18 +498,8 @@
     src: url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
   }
 
-/* ปุ่มไปหาadd กับอัพเดท */
-  .custom-btn {
-    background-color: rgb(255, 255, 255);
-    color: #28a745; /* สีเขียวอ่อน */
-    border: 2px solid #28a745;
-    transition: all 0.3s ease-in-out;
-  }
   /*สีชื่อฟาม*/
-  .custom-btn:hover {
-    background-color: #28a745;
-    color: white;
-  }
+  
   .navbar-brand span:not(.logo-icon) {
     color: white;
   }
