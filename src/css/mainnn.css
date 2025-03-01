@@ -1,8 +1,8 @@
 
 :root {
-    --primary-color: #4caf50; /* สีเขียวอ่อน */
+    --primary-color: #7d9b76; /* สีเขียวอ่อน */
     --primary-light: #80e27e;
-    --primary-dark: #087f23;
+    --primary-dark: #457D58;
     --secondary-color: #ff9800;
     --text-light: #f8f9fa;
     --text-dark: #333333;
@@ -17,7 +17,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Prompt', sans-serif;
+    font-family: "Merriweather", serif;
 }
 
 body {
