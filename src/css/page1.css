@@ -1,6 +1,6 @@
 
 :root {
-    --primary-green: #4caf50;
+    --primary-green: #457D58;
     --dark-green: #3ec945;
     --light-green: #8bc34a;
     --accent-brown: #5d4037;
@@ -144,20 +144,6 @@ h1 {
     border-bottom: 2px solid var(--accent-brown);
     padding-bottom: 15px;
     position: relative;
-}
-
-h1::after {
-    content: "🌾";
-    position: absolute;
-    font-size: 2rem;
-    right: 0;
-}
-
-h1::before {
-    content: "🌾";
-    position: absolute;
-    font-size: 2rem;
-    left: 0;
 }
 
 /* Sensor Data Section */
