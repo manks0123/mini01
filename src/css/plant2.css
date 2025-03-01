@@ -124,6 +124,7 @@
     background-position: center;
     margin-bottom: 2rem;
     position: relative;
+    z-index: 1; /* ต่ำกว่าเฮดเดอร์ */
     border-radius: 0 0 2rem 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     overflow: hidden;
@@ -496,16 +497,21 @@
     font-display: swap;
     src: url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
   }
+
 /* ปุ่มไปหาadd กับอัพเดท */
   .custom-btn {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     color: #28a745; /* สีเขียวอ่อน */
     border: 2px solid #28a745;
     transition: all 0.3s ease-in-out;
   }
-  
+  /*สีชื่อฟาม*/
   .custom-btn:hover {
     background-color: #28a745;
     color: white;
   }
-  
+  .navbar-brand span:not(.logo-icon) {
+    color: white;
+  }
+
+
