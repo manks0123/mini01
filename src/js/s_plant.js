@@ -192,3 +192,133 @@ fetch('footer.html')
       .then(data => {
         document.getElementById('footer').innerHTML = data;
       });
+
+      // ตัวแปรสำหรับจัดเก็บข้อมูลพืชทั้งหมด และข้อมูลที่กรองแล้ว
+let allPlants = [];
+let filteredPlants = [];
+let isSearchActive = false;
+
+// ปรับปรุงฟังก์ชัน fetchPlants
+function fetchPlants(page = 1) {
+  currentPage = page;
+
+  fetch(`http://localhost:3001/api/plants?page=${page}&limit=${itemsPerPage}`)
+      .then(response => response.json())
+      .then(data => {
+          // เก็บข้อมูลพืชทั้งหมดไว้ในตัวแปร global
+          allPlants = data.plants;
+          
+          // ถ้าไม่ได้กำลังค้นหา ให้แสดงข้อมูลปกติ
+          if (!isSearchActive) {
+            displayPlants(data.plants, data.pagination);
+          } else {
+            // ถ้ากำลังค้นหา ให้แสดงเฉพาะข้อมูลที่กรองแล้ว
+            displayPlants(filteredPlants, {
+              currentPage: 1,
+              totalPages: Math.ceil(filteredPlants.length / itemsPerPage) || 1
+            });
+          }
+      })
+      .catch(error => console.error("Error fetching plants:", error));
+}
+
+// ฟังก์ชันใหม่สำหรับแสดงข้อมูลพืช
+function displayPlants(plants, pagination) {
+  const tableBody = document.getElementById("plantsTable");
+  tableBody.innerHTML = "";
+
+  plants.forEach(plant => {
+      const row = document.createElement("tr");
+      
+      // ถ้ากำลังค้นหา ให้เน้นข้อความที่ตรงกับคำค้นหา
+      let plantName = plant.Plant_Name;
+      if (isSearchActive) {
+          const searchTerm = document.getElementById("search-term").value.trim();
+          if (searchTerm && plantName.toLowerCase().includes(searchTerm.toLowerCase())) {
+              const regex = new RegExp(searchTerm, 'gi');
+              plantName = plantName.replace(regex, match => `<span class="search-result-highlight">${match}</span>`);
+          }
+      }
+      
+      row.innerHTML = `
+          <td>${plant.Plant_ID}</td>
+          <td>${plantName}</td>
+          <td>${plant.Plant_season}</td>
+          <td>${plant.Growth_stage}</td>
+          <td>${plant.Area_ID}</td>
+          <td>
+              <button class="delete-button" onclick="deletePlant(${plant.Plant_ID})">
+                  <i class="fas fa-trash"></i> ลบ
+              </button>
+          </td>
+      `;
+      tableBody.appendChild(row);
+  });
+
+  const paginationInfo = document.getElementById("paginationInfo");
+  paginationInfo.innerHTML = `Page ${pagination.currentPage} of ${pagination.totalPages}`;
+
+  updatePaginationButtons(pagination.totalPages);
+}
+
+
+
+// ฟังก์ชันค้นหาพืช
+function searchPlants(searchTerm) {
+  if (!searchTerm || searchTerm.trim() === '') {
+    isSearchActive = false;
+    fetchPlants(currentPage);
+    return;
+  }
+  
+  isSearchActive = true;
+  searchTerm = searchTerm.toLowerCase();
+  
+  // กรองข้อมูลพืชตามคำค้นหา
+  filteredPlants = allPlants.filter(plant => 
+    plant.Plant_Name.toLowerCase().includes(searchTerm)
+  );
+  
+  // แสดงผลลัพธ์การค้นหา
+  displayPlants(filteredPlants, {
+    currentPage: 1,
+    totalPages: Math.ceil(filteredPlants.length / itemsPerPage) || 1
+  });
+  
+  // แสดงข้อความผลการค้นหา
+  const messagesDiv = document.getElementById("messages");
+  if (filteredPlants.length > 0) {
+    messagesDiv.innerHTML = `<div class="success">พบ ${filteredPlants.length} รายการที่ตรงกับ "${searchTerm}" | Found ${filteredPlants.length} results matching "${searchTerm}"</div>`;
+  } else {
+    messagesDiv.innerHTML = `<div class="error">ไม่พบรายการที่ตรงกับ "${searchTerm}" | No results found for "${searchTerm}"</div>`;
+  }
+}
+
+// Event Listener สำหรับฟอร์มค้นหา
+document.addEventListener("DOMContentLoaded", function() {
+  // โหลดข้อมูลพืชเมื่อโหลดหน้า
+  fetchPlants(currentPage);
+  
+  // ฟอร์มค้นหา
+  const searchForm = document.getElementById("search-form");
+  if (searchForm) {
+    searchForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const searchTerm = document.getElementById("search-term").value;
+      searchPlants(searchTerm);
+    });
+  }
+  
+  // ปุ่มรีเซ็ตการค้นหา
+  const resetButton = document.getElementById("reset-search");
+  if (resetButton) {
+    resetButton.addEventListener("click", function() {
+      document.getElementById("search-term").value = "";
+      isSearchActive = false;
+      const messagesDiv = document.getElementById("messages");
+      messagesDiv.innerHTML = "";
+      fetchPlants(1);
+    });
+  }
+});
+

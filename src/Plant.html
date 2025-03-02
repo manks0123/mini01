@@ -64,7 +64,27 @@
     
     <div id="messages"></div>
     
-
+    <!-- Search Function -->
+    <section id="search-plant">
+      <h2><i class="fas fa-search me-2"></i>ค้นหาพืช | Search Plants</h2>
+      <div class="search-container">
+        <form id="search-form" class="search-form">
+          <div class="row">
+            <div class="col-md-8">
+              <input type="text" id="search-term" placeholder="ค้นหาด้วยชื่อพืช | Search by plant name" class="search-input">
+            </div>
+            <div class="col-md-4 d-flex">
+              <button type="submit" class="search-button me-2">
+                <i class="fas fa-search me-1"></i> ค้นหา | Search
+              </button>
+              <button type="button" id="reset-search" class="reset-button">
+                <i class="fas fa-redo me-1"></i> รีเซ็ต | Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
 
     <h2>รายการพืชที่มีอยู่ | Plant List</h2>
     <div class="table-responsive">
